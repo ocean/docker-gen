@@ -30,7 +30,6 @@ dist: dist-clean
 
 
 release: dist
-	glock sync -n < GLOCKFILE
 	tar -cvzf docker-gen-alpine-linux-amd64-$(TAG).tar.gz -C dist/alpine-linux/amd64 docker-gen
 	tar -cvzf docker-gen-alpine-linux-arm64-$(TAG).tar.gz -C dist/alpine-linux/arm64 docker-gen
 	tar -cvzf docker-gen-alpine-linux-armhf-$(TAG).tar.gz -C dist/alpine-linux/armhf docker-gen
@@ -43,8 +42,7 @@ release: dist
 	tar -cvzf docker-gen-darwin-amd64-$(TAG).tar.gz -C dist/darwin/amd64 docker-gen
 
 get-deps:
-	go get github.com/robfig/glock
-	glock sync -n < GLOCKFILE
+	go mod download
 
 check-gofmt:
 	if [ -n "$(shell gofmt -l .)" ]; then \
