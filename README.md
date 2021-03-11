@@ -1,8 +1,10 @@
 docker-gen
 =====
 
-![latest 0.7.3](https://img.shields.io/badge/latest-0.7.3-green.svg?style=flat)
-[![Build Status](https://travis-ci.org/jwilder/docker-gen.svg?branch=master)](https://travis-ci.org/jwilder/docker-gen)
+## NOTE: This is a fork of the [`jwilder` version](https://github.com/jwilder/docker-gen) with updated multi-platform builds.
+
+![latest 0.7.5-rc2](https://img.shields.io/badge/latest-0.7.5-rc2-green.svg?style=flat)
+[![Build Status](https://travis-ci.org/ocean/docker-gen.svg?branch=master)](https://travis-ci.org/ocean/docker-gen)
 ![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)
 
 `docker-gen` is a file generator that renders templates using docker container meta-data.
@@ -14,28 +16,31 @@ It can be used to generate various kinds of files for:
  * **Reverse Proxy Configs** - [nginx](https://github.com/jwilder/docker-gen/blob/master/templates/nginx.tmpl), [haproxy](https://github.com/jwilder/docker-discover), etc. reverse proxy configs to route requests from the host to containers
  * **Service Discovery** - Scripts (python, bash, etc..) to register containers within [etcd](https://github.com/jwilder/docker-register), hipache, etc..
 
-===
+-----
 
 ### Installation
 
-There are three common ways to run docker-gen:
+There are three common ways to run `docker-gen`:
 * on the host
 * bundled in a container with another application
 * separate standalone containers
 
 #### Host Install
 
-Linux/OSX binaries for release [0.7.3](https://github.com/jwilder/docker-gen/releases)
+Linux/macOS binaries for release [0.7.5-rc2](https://github.com/ocean/docker-gen/releases)
 
-* [amd64](https://github.com/jwilder/docker-gen/releases/download/0.7.3/docker-gen-linux-amd64-0.7.3.tar.gz)
-* [i386](https://github.com/jwilder/docker-gen/releases/download/0.7.3/docker-gen-linux-i386-0.7.3.tar.gz)
-* [alpine-linux](https://github.com/jwilder/docker-gen/releases/download/0.7.3/docker-gen-alpine-linux-amd64-0.7.3.tar.gz)
+* [linux/amd64](https://github.com/ocean/docker-gen/releases/download/0.7.5-rc2/docker-gen-linux-amd64-0.7.5-rc2.tar.gz)
+* [linux/arm64](https://github.com/ocean/docker-gen/releases/download/0.7.5-rc2/docker-gen-linux-arm64-0.7.5-rc2.tar.gz)
+* [linux/i386](https://github.com/ocean/docker-gen/releases/download/0.7.5-rc2/docker-gen-linux-i386-0.7.5-rc2.tar.gz)
+* [alpine-linux/amd64](https://github.com/ocean/docker-gen/releases/download/0.7.5-rc2/docker-gen-alpine-linux-amd64-0.7.5-rc2.tar.gz)
+* [darwin/amd64](https://github.com/ocean/docker-gen/releases/download/0.7.5-rc2/docker-gen-darwin-amd64-0.7.5-rc2.tar.gz)
+* [darwin/arm64](https://github.com/ocean/docker-gen/releases/download/0.7.5-rc2/docker-gen-darwin-arm64-0.7.5-rc2.tar.gz)
 
 Download the version you need, untar, and install to your PATH.
 
 ```
-$ wget https://github.com/jwilder/docker-gen/releases/download/0.7.3/docker-gen-linux-amd64-0.7.3.tar.gz
-$ tar xvzf docker-gen-linux-amd64-0.7.3.tar.gz
+$ wget https://github.com/ocean/docker-gen/releases/download/0.7.5-rc2/docker-gen-linux-amd64-0.7.5-rc2.tar.gz
+$ tar xvzf docker-gen-linux-amd64-0.7.5-rc2.tar.gz
 $ ./docker-gen
 ```
 
@@ -50,7 +55,7 @@ docker-gen within a container to do service registration with etcd.
 
 #### Separate Container Install
 
-It can also be run as two separate containers using the [jwilder/docker-gen](https://index.docker.io/u/jwilder/docker-gen/)
+It can also be run as two separate containers using the [oceanic/docker-gen](https://index.docker.io/u/oceanic/docker-gen/)
 image, together with virtually any other image.
 
 This is how you could run the official [nginx](https://registry.hub.docker.com/_/nginx/) image and
@@ -66,14 +71,14 @@ $ docker run -d -p 80:80 --name nginx -v /tmp/nginx:/etc/nginx/conf.d -t nginx
 Fetch the template and start the docker-gen container with the shared volume:
 ```
 $ mkdir -p /tmp/templates && cd /tmp/templates
-$ curl -o nginx.tmpl https://raw.githubusercontent.com/jwilder/docker-gen/master/templates/nginx.tmpl
+$ curl -o nginx.tmpl https://raw.githubusercontent.com/ocean/docker-gen/master/templates/nginx.tmpl
 $ docker run -d --name nginx-gen --volumes-from nginx \
    -v /var/run/docker.sock:/tmp/docker.sock:ro \
    -v /tmp/templates:/etc/docker-gen/templates \
-   -t jwilder/docker-gen -notify-sighup nginx -watch -only-exposed /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
+   -t oceanic/docker-gen -notify-sighup nginx -watch -only-exposed /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
 ```
 
-===
+-----
 
 ### Usage
 ```
@@ -194,7 +199,7 @@ nginx = 1  # 1 is a signal number to be sent; here SIGHUP
 e75a60548dc9 = 1  # a key can be either container name (nginx) or ID
 ```
 
-===
+-----
 
 ### Templating
 
@@ -382,7 +387,7 @@ For example, this is a JSON version of an emitted RuntimeContainer struct:
 * *`whereLabelDoesNotExist $containers $label`*: Filters a slice of containers based on the non-existence of the label `$label`.
 * *`whereLabelValueMatches $containers $label $pattern`*: Filters a slice of containers based on the existence of the label `$label` with values matching the regular expression `$pattern`.
 
-===
+-----
 
 ### Examples
 
