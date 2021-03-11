@@ -46,20 +46,20 @@ $ ./docker-gen
 
 #### Bundled Container Install
 
-Docker-gen can be bundled inside of a container along-side applications.
+`docker-gen` can be bundled inside of a container along-side applications.
 
-[jwilder/nginx-proxy](https://index.docker.io/u/jwilder/nginx-proxy/) trusted build is an example of
-running docker-gen within a container along-side nginx.
+[jwilder/nginx-proxy](https://hub.docker.com/r/jwilder/nginx-proxy/) trusted build is an example of
+running `docker-gen` within a container along-side `nginx`.
 [jwilder/docker-register](https://github.com/jwilder/docker-register) is an example of running
-docker-gen within a container to do service registration with etcd.
+`docker-gen` within a container to do service registration with `etcd`.
 
 #### Separate Container Install
 
-It can also be run as two separate containers using the [oceanic/docker-gen](https://index.docker.io/u/oceanic/docker-gen/)
+It can also be run as two separate containers using the [oceanic/docker-gen](https://hub.docker.com/r/oceanic/docker-gen)
 image, together with virtually any other image.
 
-This is how you could run the official [nginx](https://registry.hub.docker.com/_/nginx/) image and
-have docker-gen generate a reverse proxy config in the same way that `nginx-proxy` works. You may want to do
+This is how you could run the [official `nginx` image](https://hub.docker.com/_/nginx) and
+have `docker-gen` generate a reverse proxy config in the same way that `nginx-proxy` works. You may want to do
 this to prevent having the docker socket bound to a publicly exposed container service.
 
 Start nginx with a shared volume:
@@ -68,7 +68,7 @@ Start nginx with a shared volume:
 $ docker run -d -p 80:80 --name nginx -v /tmp/nginx:/etc/nginx/conf.d -t nginx
 ```
 
-Fetch the template and start the docker-gen container with the shared volume:
+Fetch the template and start the `docker-gen` container with the shared volume:
 ```
 $ mkdir -p /tmp/templates && cd /tmp/templates
 $ curl -o nginx.tmpl https://raw.githubusercontent.com/ocean/docker-gen/master/templates/nginx.tmpl
@@ -397,7 +397,7 @@ For example, this is a JSON version of an emitted RuntimeContainer struct:
 
 #### NGINX Reverse Proxy Config
 
-[jwilder/nginx-proxy](https://index.docker.io/u/jwilder/nginx-proxy/) trusted build.
+[jwilder/nginx-proxy](https://hub.docker.com/r/jwilder/nginx-proxy) trusted build.
 
 Start nginx-proxy:
 
@@ -428,7 +428,6 @@ $ docker-gen -watch -notify "restart fluentd" templates/fluentd.tmpl /etc/fluent
 
 #### Service Discovery in Etcd
 
-
 This template is an example of generating a script that is then executed. This template generates
 a python script that is then executed which register containers in Etcd using its HTTP API.
 
@@ -438,9 +437,6 @@ $ docker-gen -notify "/bin/bash /tmp/etcd.sh" -interval 10 templates/etcd.tmpl /
 
 
 ### Development
-
-This project uses [glock](https://github.com/robfig/glock) for managing 3rd party dependencies.
-You'll need to install glock into your workspace before hacking on docker-gen.
 
 ```
 $ git clone <your fork>
