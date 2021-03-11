@@ -3,7 +3,7 @@ docker-gen
 
 ## NOTE: This is a fork of the [`jwilder` version](https://github.com/jwilder/docker-gen) with updated multi-platform builds.
 
-![latest 0.7.5-rc2](https://img.shields.io/badge/latest-0.7.5-rc2-green.svg?style=flat)
+![latest 0.7.5-rc2](https://img.shields.io/badge/latest-0.7.5--rc2-green.svg?style=flat)
 [![Build Status](https://travis-ci.org/ocean/docker-gen.svg?branch=master)](https://travis-ci.org/ocean/docker-gen)
 ![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)
 
